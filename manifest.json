@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "VisaIndex Scraper",
+  "version": "1.0",
+  "permissions": ["scripting"],
+  "content_scripts": [
+    {
+      "matches": ["https://visaindex.com/country/*/"],
+      "js": ["content.js"]
+    }
+  ]
+}
