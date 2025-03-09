@@ -10,6 +10,9 @@ function normalizeCountryName(name) {
   if (name === "Guinea-Bissau") {
     return "guinea-bissau";
   }
+  if (name === "Myanmar") {
+    return "myanmar-burma";
+  }
   
   return name
     .normalize('NFD')                 // Decompose accented characters
