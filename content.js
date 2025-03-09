@@ -691,10 +691,18 @@ function navigateToNextCountry() {
     if (!normalizedVisited.includes(normalizedCountry)) {
       // Format country for URL - normalize to handle special characters
       const formattedCountry = normalizeCountryName(country);
-      const nextUrl = `/country/${formattedCountry}-passport-ranking/`;
-      l('Navigating to next country:', country, nextUrl);
-      window.location.href = nextUrl;
-      return;
+      
+      // Validate that we have a non-empty country name before navigating
+      if (formattedCountry && formattedCountry.trim() !== '') {
+        const nextUrl = `/country/${formattedCountry}-passport-ranking/`;
+        l('Navigating to next country:', country, nextUrl);
+        window.location.href = nextUrl;
+        return;
+      } else {
+        l('Warning: Empty country name detected for:', country);
+        // Skip this country and continue to the next one
+        continue;
+      }
     }
   }
   
@@ -718,6 +726,16 @@ function extractData() {
     const urlParams = new URL(window.location.href);
     //alert(`pathname is ${urlParams.pathname}`);
     const match = window.location.pathname.match(/\/country\/([^/]+)-passport-ranking/);
+
+    // Validate that we have a valid match and country name
+    if (!match || !match[1] || match[1].trim() === '') {
+      l('Error: Invalid country in URL:', window.location.pathname);
+      // Wait a moment and then navigate to the next country
+      setTimeout(() => {
+        navigateToNextCountry();
+      }, 1000);
+      return;
+    }
 
     //const compareMatch = window.location.href.match(/between=(.*)-passport-ranking-and-(.*)-passport-ranking/);
     //const sourceCountry = match ? match[1] : 'source';
