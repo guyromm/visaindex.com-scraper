@@ -678,7 +678,7 @@ function navigateToNextCountry() {
   // Find the next unvisited country
   for (const country of countriesToVisit) {
     const normalizedCountry = normalizeCountryName(country);
-    l('checking if visitedCountries has', country);
+      //l('checking if visitedCountries has', country);
     
     if (!normalizedVisited.includes(normalizedCountry)) {
       // Format country for URL - normalize to handle special characters
@@ -732,7 +732,7 @@ function extractData() {
     {
 	let status = item.title
 	let countries = item.countries
-	l('status=',status,'countries=',countries)
+	//l('status=',status,'countries=',countries)
 	for (let dst of countries)
 	{
 	    output.push(`${country}\t${dst}\t${status}`);
