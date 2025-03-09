@@ -16,6 +16,9 @@ function normalizeCountryName(name) {
   if (name === "Timor-Leste") {
     return "timor-leste";
   }
+  if (name === "American Samoa") {
+    return "samoa";
+  }
   
   return name
     .normalize('NFD')                 // Decompose accented characters
