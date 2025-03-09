@@ -25,7 +25,7 @@ function normalizeCountryName(name) {
     .toLowerCase();                    // Convert to lowercase
 }
 
-const countriesToVisit = [
+const countriesToVisit = [...new Set([
     "Afghanistan",
     "Albania",
     "Algeria",
@@ -225,8 +225,6 @@ const countriesToVisit = [
     "Yemen",
     "Zambia",
     "Zimbabwe",
-    "",
-    "",
     "Afghanistan",
     "Albania",
     "Algeria",
@@ -426,8 +424,6 @@ const countriesToVisit = [
     "Yemen",
     "Zambia",
     "Zimbabwe",
-    "",
-    "",
     "Afghanistan",
     "Albania",
     "Algeria",
@@ -658,8 +654,9 @@ const countriesToVisit = [
     "Yemen",
     "Zambia",
     "Zimbabwe"
-]
+])]
 
+l(countriesToVisit.length,'to visit in total.')
 // Load visited countries from localStorage
 function loadVisitedCountries() {
   const visited = localStorage.getItem('visitedCountries');
