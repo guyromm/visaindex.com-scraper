@@ -4,6 +4,16 @@ let data;
 let allCountries = new Set();
 let visitedCountries = new Set();
 
+// Function to normalize country names (remove accents, special chars)
+function normalizeCountryName(name) {
+  return name
+    .normalize('NFD')                 // Decompose accented characters
+    .replace(/[\u0300-\u036f]/g, '')  // Remove diacritics
+    .replace(/[^\w\s]/g, '')          // Remove non-alphanumeric chars except spaces
+    .replace(/\s+/g, '-')             // Replace spaces with hyphens
+    .toLowerCase();                    // Convert to lowercase
+}
+
 const countriesToVisit = [
     "Afghanistan",
     "Albania",
@@ -662,12 +672,17 @@ function extractDataCompare() {
 }
 
 function navigateToNextCountry() {
-    const visitedLC = [...visitedCountries].map(vc=>vc.toLowerCase())
+  // Normalize all visited countries for comparison
+  const normalizedVisited = [...visitedCountries].map(country => normalizeCountryName(country));
+  
   // Find the next unvisited country
-    for (const country of countriesToVisit) {
-	l('checking if visitedCountries has',country)
-	if (!visitedLC.includes(country.toLowerCase())) {
-      const formattedCountry = country.toLowerCase().replace(/\s+/g, '-');
+  for (const country of countriesToVisit) {
+    const normalizedCountry = normalizeCountryName(country);
+    l('checking if visitedCountries has', country);
+    
+    if (!normalizedVisited.includes(normalizedCountry)) {
+      // Format country for URL - normalize to handle special characters
+      const formattedCountry = normalizeCountryName(country);
       const nextUrl = `/country/${formattedCountry}-passport-ranking/`;
       l('Navigating to next country:', country, nextUrl);
       window.location.href = nextUrl;
@@ -701,7 +716,7 @@ function extractData() {
     //const destinationCountry = match ? match[2] : 'destination';
     const country = decodeURIComponent(match[1]);
     
-    // Mark this country as visited
+    // Mark this country as visited - properly capitalize the country name
     const normalizedCountry = country.replace(/-/g, ' ')
                                     .split(' ')
                                     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
