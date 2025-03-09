@@ -6,6 +6,11 @@ let visitedCountries = new Set();
 
 // Function to normalize country names (remove accents, special chars)
 function normalizeCountryName(name) {
+  // Special case handling
+  if (name === "Guinea-Bissau") {
+    return "guinea-bissau";
+  }
+  
   return name
     .normalize('NFD')                 // Decompose accented characters
     .replace(/[\u0300-\u036f]/g, '')  // Remove diacritics
